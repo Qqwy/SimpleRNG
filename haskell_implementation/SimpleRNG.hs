@@ -12,14 +12,14 @@ import Control.Arrow
 (|>) x f = f x
 infixl 0 |>
 
-newtype SeedState = SeedState Word32
+newtype RNGState = RNGState Word32
   deriving (Eq, Show, Enum, Bounded)
 
-seed :: Integral a => a -> SeedState
-seed = SeedState . fromIntegral
+seed :: Integral a => a -> RNGState
+seed = RNGState . fromIntegral
 
-rand_r :: SeedState -> (Word32, SeedState)
-rand_r (SeedState num) = (res, SeedState res)
+rand_r :: RNGState -> (Word32, RNGState)
+rand_r (RNGState num) = (res, RNGState res)
   where
     res = num
       |> xorshift 13
@@ -28,17 +28,17 @@ rand_r (SeedState num) = (res, SeedState res)
     xorshift :: Int -> Word32 -> Word32
     xorshift amount x = x `xor` (shift x amount)
 
-instance RandomGen SeedState where
+instance RandomGen RNGState where
   next seed_state = (first fromIntegral) $ rand_r seed_state
     where
   genRange seed_state = (fromEnum (minBound `asTypeOf` seed_state),
                 fromEnum (maxBound `asTypeOf` seed_state))
 
-  split seed_state@(SeedState num) =  (seed_state', inverted_seed_state')
+  split seed_state@(RNGState num) =  (seed_state', inverted_seed_state')
     where
       (_, seed_state') = next seed_state
       (_, inverted_seed_state') = next inverted_seed_state
-      inverted_seed_state = SeedState (maxBound - num)
+      inverted_seed_state = RNGState (maxBound - num)
 
 main :: IO ()
 main = do

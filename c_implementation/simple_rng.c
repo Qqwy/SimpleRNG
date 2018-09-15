@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include "simple_rng.h"
 
 uint32_t SimpleRNG_rand_r(uint32_t *rng_state) {
   uint32_t num = *rng_state;
