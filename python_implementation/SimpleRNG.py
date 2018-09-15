@@ -32,7 +32,7 @@ class SimpleRNG(object):
         self.rng_state = num
         return num
 
-
+# Example:
 if __name__ == '__main__':
     rng = SimpleRNG(42)
     for x in range(0, 10):
