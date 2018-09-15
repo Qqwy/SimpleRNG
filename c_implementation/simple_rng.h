@@ -15,16 +15,17 @@
 
   1. use SimpleRNG_seed(your_lucky_number) to seed the RNG to a desired 32-bit unsigned integer.
   2. Call SimpleRNG_rand() to get a new random 32-bit unsigned integer.
+  3. Repeat step (2) as often as you'd like.
 
-  If you're working in an environment where re-entrancy is important (like when multi-threading), or want to keep track of multiple RNGs side-by-side, use `SimpleRNG_rand_r(rng_state)` insted, which will take the passed argument as RNG state (and mutate it in place to become the new state).
+  If you want to keep track of multiple RNGs side-by-side, use `SimpleRNG_rand_r(rng_state)` instead, which will take the passed argument as RNG state (and mutate it in place to become the new state).
  */
 
 #include <stdint.h>
 
-uint32_t SimpleRNG_rand_r(uint32_t *rng_state);
-
 uint32_t SimpleRNG_rand();
 
 void SimpleRNG_seed(uint32_t seed);
+
+uint32_t SimpleRNG_rand_r(uint32_t *rng_state);
 
 #endif
