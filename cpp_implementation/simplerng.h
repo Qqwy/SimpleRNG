@@ -8,7 +8,7 @@
   NOTE: This is _not_ a cryptographically secure random number generator.
   Also, be aware that '0' should not be used as a seed, because in this case, the output of the RNG will always be '0'.
 
-  Author: Wiebe-Marten Wijnja (Qqwy)
+  Authors: Wiebe-Marten Wijnja (Qqwy) and Jeroen de Baat
   Date: 2018-09-15
 
   Usage instructions:
