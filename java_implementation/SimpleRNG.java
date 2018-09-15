@@ -30,7 +30,7 @@ public class SimpleRNG {
         }
     }
 
-    private static long max_32bit = (long) Math.pow(2, 32);
+    private static long max_32bit = (long) 1 << 32;
     public static long rand_r(SimpleRNG.RNGState rng_state) {
         long num = rng_state.data;
         num ^= (num << 13) % max_32bit;
