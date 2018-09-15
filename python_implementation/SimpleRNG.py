@@ -14,6 +14,9 @@
   2. Call SimpleRNG.rand() to get a new random 32-bit unsigned integer.
 
   If you're working in an environment where re-entrancy is important (like when multi-threading), or want to keep track of multiple RNGs side-by-side,use `SimpleRNG.rand_r(rng_state)` instead, which will take the passed argument as RNG state (and mutate it in place to become the new state).
+
+
+  Be warned that although Python uses arbitrary large integers, this RNG will only ever output values between 0 and 2^32.
 """
 
 class SeedState(object):

@@ -1,7 +1,7 @@
 #ifndef SIMPLE_RNG_H
 #define SIMPLE_RNG_H
 
-/*
+/**
   Implementation of a 32-bit 'Xorshift' Random Number Generator,
   based on the work of George Marsaglia (www.jstatsoft.org/v08/i14/paper , doi:10.18637/jss.v008.i14)
 
