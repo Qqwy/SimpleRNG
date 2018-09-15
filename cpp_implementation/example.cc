@@ -8,11 +8,11 @@ int main()
 
     size_t n = 10;
     while (n--)
-        std::cout << static_cast<unsigned long>(rng.SimpleRNG_rand()) << '\n';
+        std::cout << static_cast<unsigned long>(rng.rand()) << '\n';
 
     // Modifying a random number in place
     uint32_t thisWillBeModifiedInPlace = 43;
-    rng.SimpleRNG_rand(thisWillBeModifiedInPlace);
+    rng.rand(thisWillBeModifiedInPlace);
     std::cout << '\n' << "43 modified in place: "
         << static_cast<unsigned long>(thisWillBeModifiedInPlace) << std::endl;
 }

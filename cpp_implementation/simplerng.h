@@ -27,9 +27,9 @@ class SimpleRNG
 
 public:
     SimpleRNG(uint32_t seed);
-    void SimpleRNG_seed(uint32_t seed);
-    uint32_t SimpleRNG_rand();
-    uint32_t SimpleRNG_rand(uint32_t &rng_state);
+    void seed(uint32_t seed);
+    uint32_t rand();
+    uint32_t rand(uint32_t &rng_state);
 };
 
 #endif
