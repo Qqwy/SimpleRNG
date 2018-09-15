@@ -13,10 +13,12 @@
 
   Usage instructions:
 
-  1. use SimpleRNG_seed(your_lucky_number) to seed the RNG to a desired 32-bit unsigned integer.
-  2. Call SimpleRNG_rand() to get a new random 32-bit unsigned integer.
+  1. use `SimpleRNG rng{your_lucky_number};` to seed the RNG to a desired 32-bit unsigned integer.
+  2. Call `rng.rand()` to get a new random 32-bit unsigned integer.
+  3. Repeat step (2) as often as you'd like.
 
-  If you're working in an environment where re-entrancy is important (like when multi-threading), or want to keep track of multiple RNGs side-by-side, use `SimpleRNG_rand_r(rng_state)` instead, which will take the passed argument as RNG state (and mutate it in place to become the new state).
+  Re-seeding can be done using `rng.seed(some_other_number)`
+
  */
 
 #include <cstdint>
