@@ -1,27 +1,36 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module SimpleRNG where
 
-import Data.Int (Int32)
-import Data.Bits (xor, shiftL, shiftR)
-import System.Random (RandomGen(..))
+import Data.Word (Word32)
+import Data.Bits (xor, shift)
+import System.Random (RandomGen(..), randoms)
+import System.IO
+import Control.Monad
+import Control.Arrow
 
-newtype SeedState = SeedState Int32
+(|>) :: a -> (a -> b) -> b
+(|>) x f = f x
+infixl 0 |>
+
+newtype SeedState = SeedState Word32
   deriving (Eq, Show, Enum, Bounded)
 
 seed :: Integral a => a -> SeedState
 seed = SeedState . fromIntegral
 
-rand_r :: SeedState -> (Int32, SeedState)
-rand_r (SeedState a) = (d, SeedState d)
+rand_r :: SeedState -> (Word32, SeedState)
+rand_r (SeedState num) = (res, SeedState res)
   where
-    b = a `xor` (shiftL a 13)
-    c = b `xor` (shiftR b 17)
-    d = c `xor` (shiftL c 5)
+    res = num
+      |> xorshift 13
+      |> xorshift (-17)
+      |> xorshift 5
+    xorshift :: Int -> Word32 -> Word32
+    xorshift amount x = x `xor` (shift x amount)
 
 instance RandomGen SeedState where
-  next seed_state = (fromIntegral num, new_seed_state)
+  next seed_state = (first fromIntegral) $ rand_r seed_state
     where
-      (num, new_seed_state) = rand_r seed_state
   genRange seed_state = (fromEnum (minBound `asTypeOf` seed_state),
                 fromEnum (maxBound `asTypeOf` seed_state))
 
@@ -30,3 +39,11 @@ instance RandomGen SeedState where
       (_, seed_state') = next seed_state
       (_, inverted_seed_state') = next inverted_seed_state
       inverted_seed_state = SeedState (maxBound - num)
+
+main :: IO ()
+main = do
+  let ourseed = 42 :: Word32
+  let rng = (seed ourseed)
+  let random_numbers = System.Random.randoms rng :: [Word32]
+
+  Control.Monad.forM_ (take 10 random_numbers) (System.IO.putStrLn . show)
