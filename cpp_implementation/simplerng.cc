@@ -1,5 +1,15 @@
 #include "simplerng.h"
 
+SimpleRNG::SimpleRNG(uint32_t seed)
+  :
+  d_rng_state(seed)
+{}
+
+uint32_t SimpleRNG::rand()
+{
+  return rand(d_rng_state);
+}
+
 uint32_t SimpleRNG::rand(uint32_t &rng_state)
 {
     uint32_t num = rng_state;
@@ -9,16 +19,6 @@ uint32_t SimpleRNG::rand(uint32_t &rng_state)
     rng_state = num;
 
     return num;
-}
-
-SimpleRNG::SimpleRNG(uint32_t seed)
-:
-d_rng_state(seed)
-{}
-
-uint32_t SimpleRNG::rand()
-{
-    return rand(d_rng_state);
 }
 
 void SimpleRNG::seed(uint32_t seed)

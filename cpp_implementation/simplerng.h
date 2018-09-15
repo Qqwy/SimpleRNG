@@ -24,12 +24,11 @@
 class SimpleRNG
 {
     uint32_t d_rng_state;
-
+    uint32_t rand(uint32_t &rng_state);
 public:
     SimpleRNG(uint32_t seed);
     void seed(uint32_t seed);
     uint32_t rand();
-    uint32_t rand(uint32_t &rng_state);
 };
 
 #endif
