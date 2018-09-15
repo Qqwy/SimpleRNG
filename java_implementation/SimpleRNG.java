@@ -21,12 +21,12 @@ public class SimpleRNG {
        Be warned that although the library returns `longs`, the RNG will only ever output values between 0 and 2^32.
     */
     private static long max_32bit = (long) 1 << 32;
+    long rng_state;
 
     public SimpleRNG(long seed) {
         this.seed(seed);
     }
 
-    long rng_state;
     public long rand() {
         long num = this.rng_state;
         num ^= (num << 13) % max_32bit;

@@ -10,38 +10,30 @@
 
   Usage instructions:
 
-  1. use SimpleRNG.seed(your_lucky_number) to seed the RNG to a desired 32-bit unsigned integer.
-  2. Call SimpleRNG.rand() to get a new random 32-bit unsigned integer.
-
-  If you're working in an environment where re-entrancy is important (like when multi-threading), or want to keep track of multiple RNGs side-by-side,use `SimpleRNG.rand_r(rng_state)` instead, which will take the passed argument as RNG state (and mutate it in place to become the new state).
-
+  1. use `rng = SimpleRNG(your_lucky_number)` to seed the RNG to a desired 32-bit unsigned integer.
+  2. Call `rng.rand()` to get a new random 32-bit unsigned integer.
+  3. Repeat step (2) as often as you'd like.
 
   Be warned that although Python uses arbitrary large integers, this RNG will only ever output values between 0 and 2^32.
 """
 
-class RNGState(object):
-    def __init__(self, seed = 42):
-        self.data = seed
+class SimpleRNG(object):
+    def __init__(self, seed):
+        self.seed(seed)
 
-def rand_r(rng_state):
-    num = rng_state.data
-    num ^= (num << 13) % (2 ** 32)
-    num ^= (num >> 17) % (2 ** 32)
-    num ^= (num << 5) % (2 ** 32)
-    rng_state.data = num
-    return num
+    def seed(self, seed):
+        self.rng_state = seed
 
+    def rand(self):
+        num = self.rng_state
+        num ^= (num << 13) % (2 ** 32)
+        num ^= (num >> 17) % (2 ** 32)
+        num ^= (num << 5) % (2 ** 32)
+        self.rng_state = num
+        return num
 
-__global_rng_state = RNGState(42)
-
-def rand():
-    global __global_rng_state
-    return rand_r(__global_rng_state)
-
-def seed(seed):
-    global __global_rng_state
-    __global_rng_state = RNGState(seed)
 
 if __name__ == '__main__':
+    rng = SimpleRNG(42)
     for x in range(0, 10):
-        print(rand())
+        print(rng.rand())
