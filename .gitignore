@@ -215,3 +215,10 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Vim swap files
+*.swp
+
+# macOS folder information
+.DS_Store
+
