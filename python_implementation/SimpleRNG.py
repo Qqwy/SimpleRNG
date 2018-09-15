@@ -19,7 +19,7 @@
   Be warned that although Python uses arbitrary large integers, this RNG will only ever output values between 0 and 2^32.
 """
 
-class SeedState(object):
+class RNGState(object):
     def __init__(self, seed = 42):
         self.data = seed
 
@@ -40,7 +40,7 @@ def rand():
 
 def seed(seed):
     global __global_rng_state
-    __global_rng_state = SeedState(seed)
+    __global_rng_state = RNGState(seed)
 
 if __name__ == '__main__':
     for x in range(0, 10):
